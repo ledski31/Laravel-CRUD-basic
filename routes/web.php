@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/users', 'UserCrtl@list');
+
+
 Route::get('/{any}', function($a) {
 	return $a;
 });
