@@ -30,7 +30,7 @@ class FuncionarioCtrl extends Controller
 
 	public function create() {
 		# validação
-		$v = request()->validate([
+		$camposValidados = request()->validate([
 			'nome' => ['required','unique:funcionarios','min:3','max:100'],
 			'cargo' => 'required',
 			'endereco' => ['required','min:10','max:250'],
@@ -58,7 +58,7 @@ class FuncionarioCtrl extends Controller
 		// ]);
 
 		# forma mass assignment mas com o array validado
-		$f = Funcionario::create( $v );
+		$f = Funcionario::create( $camposValidados );
 
 		# Se for uma página que faz requerimento via form,
 		# deve-se redirecionar a página
@@ -70,8 +70,38 @@ class FuncionarioCtrl extends Controller
 			'errors' => null,
 			'lastId' => $f->id,
 		]);
+	}
+
+
+
+
+	public function update() {
 
 	}
+
+
+
+
+	public function destroy() {
+		$id = request('id');
+		$f = Funcionario::find( $id );
+		
+		if( empty($f) ) {
+			return [
+				'error' => 404,
+				'errormessage' => 'Entry not found'
+			];
+		}
+		
+		Funcionario::destroy( $id );
+		return response()->json([
+			'error' => null,
+			'deletedData' => $f
+		]);
+		
+	}
+
+
 
 
 }
