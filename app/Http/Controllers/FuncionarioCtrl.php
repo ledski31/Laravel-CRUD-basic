@@ -31,7 +31,7 @@ class FuncionarioCtrl extends Controller
 	public function create() {
 		# validação
 		request()->validate([
-			'nome' => ['required','min:3','max:100'],
+			'nome' => ['required','unique:funcionarios','min:3','max:100'],
 			'cargo' => 'required',
 			'endereco' => ['required','min:10','max:250'],
 			'telefone' => ['required','min:9','max:14'],
