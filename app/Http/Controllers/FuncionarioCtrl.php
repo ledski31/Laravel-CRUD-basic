@@ -49,7 +49,7 @@ class FuncionarioCtrl extends Controller
 
 		# forma mass assignment de persistir
 		# (Precisa da configuração do membro $fillable no model Funcionario)
-		Funcionario::create([
+		$f = Funcionario::create([
 			'nome' => request('nome'),
 			'cargo' => request('cargo'),
 			'endereco' => request('endereco'),
@@ -57,7 +57,16 @@ class FuncionarioCtrl extends Controller
 			'nascimento' => request('nascimento'),
 		]);
 
-		return redirect('funcionarios/list');
+		# Se for uma página que faz requerimento via form,
+		# deve-se redirecionar a página
+		//return redirect('funcionarios/list');
+
+		# No caso de uma página que faz requerimento asíncrono,
+		# é melhor retornar um JSON
+		return response()->json([
+			'errors' => null,
+			'lastId' => $f->id,
+		]);
 
 	}
 
