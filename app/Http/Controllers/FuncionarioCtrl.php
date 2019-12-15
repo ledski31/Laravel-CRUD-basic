@@ -57,6 +57,8 @@ class FuncionarioCtrl extends Controller
 			'nascimento' => request('nascimento'),
 		]);
 
+		return redirect('funcionarios/list');
+
 	}
 
 
