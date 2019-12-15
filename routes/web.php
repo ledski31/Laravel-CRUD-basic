@@ -10,12 +10,12 @@ Route::get('/', function () {
 Route::get('/users', 'UserCrtl@list');
 
 
-# ROUTES para entidade Funcionario
+# Route para a página de Teste da API funcionários
 Route::get('/funcionarios', 'FuncionarioCtrl@pannel');
 
+# Routes da API funcinários
 Route::get('/funcionarios/list', 'FuncionarioCtrl@list');
-Route::get('/funcionarios/show/{id}', 'FuncionarioCtrl@show');
-
+Route::get('/funcionarios/show/{id?}', 'FuncionarioCtrl@show');
 Route::put('/funcionarios/create', 'FuncionarioCtrl@create');
 Route::patch('/funcionarios/update', 'FuncionarioCtrl@update');
 Route::delete('/funcionarios/destroy', 'FuncionarioCtrl@destroy');
