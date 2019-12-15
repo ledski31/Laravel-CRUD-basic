@@ -76,6 +76,7 @@ class FuncionarioCtrl extends Controller
 	 * Note que é preciso importar a classe FuncionarioSaveValidation.
 	 * Nesse método a validação do request é feita antes de executá-lo, separando
 	 * melhor as responsabilidades.
+	 * @return JSON
 	 */
 	public function update( FuncionarioSaveValidation $req ) {
 		$f = Funcionario::find( $req->idModificar );
@@ -91,7 +92,9 @@ class FuncionarioCtrl extends Controller
 
 	/**
 	 * Retorna um Funcionario da base.
-	 * Se não existir o id, throw um JSON de erro.
+	 * Se não existir o ID, throw um JSON de erro.
+	 * @param id Número do ID do funcionário
+	 * @return JSON
 	 */
 	protected function assertGetFuncionarioById( $id ) {
 		$f = Funcionario::find( $id );
@@ -110,8 +113,8 @@ class FuncionarioCtrl extends Controller
 
 
 	/**
-	 * Apaga do DB o registo de usuário com id especificado pela requisição post.
-	 * Retorna um json com os erros ou com as informações do registro apagado.
+	 * Apaga do DB o registo de usuário com ID especificado pela requisição post.
+	 * Retorna um JSON com os erros ou com os dados do registro apagado.
 	 * @return JSON
 	 */
 	public function destroy() {

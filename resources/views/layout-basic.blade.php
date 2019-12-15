@@ -8,13 +8,17 @@
 		<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 		<!-- Styles -->
 		<style>
-			html, body {
+			html {
+				margin: 0;
+				padding: 0;
+			}
+			body {
 				background-color: #fff;
 					color: #636b6f;
 					font-family: 'Nunito', sans-serif;
 					font-weight: 200;
-					height: 100vh;
 					margin: 1em;
+					margin-bottom: 0;
          	}
 
             .full-height {
