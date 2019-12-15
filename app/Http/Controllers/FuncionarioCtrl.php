@@ -30,7 +30,7 @@ class FuncionarioCtrl extends Controller
 
 	public function create() {
 		# validação
-		request()->validate([
+		$v = request()->validate([
 			'nome' => ['required','unique:funcionarios','min:3','max:100'],
 			'cargo' => 'required',
 			'endereco' => ['required','min:10','max:250'],
@@ -49,13 +49,16 @@ class FuncionarioCtrl extends Controller
 
 		# forma mass assignment de persistir
 		# (Precisa da configuração do membro $fillable no model Funcionario)
-		$f = Funcionario::create([
-			'nome' => request('nome'),
-			'cargo' => request('cargo'),
-			'endereco' => request('endereco'),
-			'telefone' => request('telefone'),
-			'nascimento' => request('nascimento'),
-		]);
+		// $f = Funcionario::create([
+		// 	'nome' => request('nome'),
+		// 	'cargo' => request('cargo'),
+		// 	'endereco' => request('endereco'),
+		// 	'telefone' => request('telefone'),
+		// 	'nascimento' => request('nascimento'),
+		// ]);
+
+		# forma mass assignment mas com o array validado
+		$f = Funcionario::create( $v );
 
 		# Se for uma página que faz requerimento via form,
 		# deve-se redirecionar a página
