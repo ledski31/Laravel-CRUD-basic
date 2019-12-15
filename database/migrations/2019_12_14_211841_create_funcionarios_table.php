@@ -16,13 +16,10 @@ class CreateFuncionariosTable extends Migration
         Schema::create('funcionarios', function (Blueprint $table) {
 				$table->bigIncrements('id');
 				$table->string('nome');
-				$table->string('username');
-				$table->string('cargo');
-				$table->integer('departamento')->default(0);
-				$table->date('nascimento');
+				$table->integer('cargo');
+				$table->string('endereco');
 				$table->string('telefone');
-				$table->string('carteira');
-				$table->string('cpf');
+				$table->date('nascimento');
             $table->timestamps();
         });
     }
