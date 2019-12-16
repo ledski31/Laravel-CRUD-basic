@@ -10,4 +10,8 @@ class Funcionario extends Model {
 	# $guarded determina quais não podem.
 	protected $fillable = ['nome','cargo','endereco','telefone','nascimento'];
 	protected $guarded = ['id'];
+
+	public function getCargo() {
+		return $this->belongsTo( Cargo::class, 'cargo' );
+	}
 }
