@@ -44,7 +44,7 @@
 	<fieldset>
 		<legend>Buscar registro - GET /funcionarios/show/:id</legend>
 		<label for='idShow'>ID do registro</label>
-		<input id='idShow' name='idShow' type='number' value='' required />
+		<input id='idShow' name='idShow' type='number' value='' />
 		<br>
 		<input type='submit' value='Buscar' />
 	</fieldset>
@@ -150,7 +150,7 @@
 	<fieldset>
 		<legend>Apagar registro - POST /funcionarios/destroy</legend>
 		<label for='id'>ID do registro</label>
-		<input id='id' type='number' value='' name='id' required />
+		<input id='id' type='number' value='' name='id' />
 		<br>
 		<input type='submit' value='Apagar' />
 	</fieldset>
