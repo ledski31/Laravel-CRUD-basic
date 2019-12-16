@@ -91,6 +91,23 @@ class FuncionarioCtrl extends Controller
 
 
 	/**
+	 * Apaga do DB o registo de usuário com ID especificado pela requisição post.
+	 * Retorna um JSON com os erros ou com os dados do registro apagado.
+	 * @return JSON
+	 */
+	public function destroy() {
+		$id = request('id');
+		$f = $this->assertGetFuncionarioById( $id );
+		Funcionario::destroy( $id );
+		return response()->json(
+			['error' => null, 'data' => $f]
+		);
+	}
+
+
+
+
+	/**
 	 * Retorna um Funcionario da base.
 	 * Se não existir o ID, throw um JSON de erro.
 	 * @param id Número do ID do funcionário
@@ -107,23 +124,6 @@ class FuncionarioCtrl extends Controller
 			);
 		}
 		return $f;
-	}
-
-
-
-
-	/**
-	 * Apaga do DB o registo de usuário com ID especificado pela requisição post.
-	 * Retorna um JSON com os erros ou com os dados do registro apagado.
-	 * @return JSON
-	 */
-	public function destroy() {
-		$id = request('id');
-		$f = $this->assertGetFuncionarioById( $id );
-		Funcionario::destroy( $id );
-		return response()->json(
-			['error' => null, 'data' => $f]
-		);
 	}
 
 
