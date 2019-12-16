@@ -1,11 +1,5 @@
 <?php
 
-# Routes gerais
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 # Routes para entidade User
 Route::get('/users', 'UserCrtl@list');
 
@@ -13,6 +7,7 @@ Route::get('/users', 'UserCrtl@list');
 Route::get( '/cargos', 'CargoCtrl@readAll' );
 
 # Route para a página de Teste da API funcionários
+Route::get( '/', 'FuncionarioCtrl@pannel' );
 Route::get( '/funcionarios', 'FuncionarioCtrl@pannel' );
 
 # Routes da API funcinários
