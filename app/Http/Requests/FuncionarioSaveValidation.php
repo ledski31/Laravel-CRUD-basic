@@ -13,7 +13,6 @@ class FuncionarioSaveValidation extends FormRequest
 {
    /**
     * Determine if the user is authorized to make this request.
-    *
     * @return bool
     */
 	public function authorize() {
@@ -24,13 +23,59 @@ class FuncionarioSaveValidation extends FormRequest
 
 
    /**
+	 * Método chamado pelo framework quando faz a validação do request.
 	 * Define as regras para a validação dos campos enviados pelo usuário
 	 * para a criação ou update de um Funcionario.
-    * @return array
+    * @return array Regras de validação para request
     */
 	public function rules() {
 		# Regras para validação de Update
-		if( $this->has('idModificar') ) return [
+		if( $this->has('idModificar') )
+			return $this->rulesUpdate();
+
+		# Regras para validação de Create
+		else
+			return $this->rulesCreate();
+	}
+
+
+
+
+	/**
+	 * Regras comuns tanto às regras de Create quando às regras de Update
+	 */
+	private $rulesCommon = [
+		'cargo' => ['required','exists:cargos,id'],
+		'endereco' => ['required','min:10','max:250'],
+		'telefone' => ['nullable','min:9','max:14'],
+		'nascimento' => 'required',
+	];
+
+
+
+
+	/**
+	 * Método auxiliar para o método rules().
+	 * Combina as regras específicas de Create com as comuns.
+	 * @return array Regras de Create
+	 */
+	private function rulesCreate() {
+		$r = [
+			'nome' => ['required','unique:funcionarios,nome','min:3','max:100'],
+		];
+		return array_merge( $rulesCreate, $this->rulesCommon );
+	}
+
+
+
+
+	/**
+	 * Método auxiliar para o método rules().
+	 * Combina as regras específicas de Update com as comuns.
+	 * @return array Regras de Update
+	 */
+	private function rulesUpdate() {
+		$r = [
 			'idModificar' => 'exists:funcionarios,id',
 			'nome' => [
 				'required',
@@ -40,21 +85,9 @@ class FuncionarioSaveValidation extends FormRequest
 				# 'nome' não for alterado, vai conflitar com ele mesmo no DB.
 				'unique:funcionarios,nome,'.$this->idModificar.',id',
 				'min:3','max:100'
-			],
-			'cargo' => 'required',
-			'endereco' => ['required','min:10','max:250'],
-			'telefone' => ['required','min:9','max:14'],
-			'nascimento' => 'required',
+			]
 		];
-		
-		# Regras para validação de Create
-		else return [
-			'nome' => ['required','unique:funcionarios,nome','min:3','max:100'],
-			'cargo' => 'required',
-			'endereco' => ['required','min:10','max:250'],
-			'telefone' => ['required','min:9','max:14'],
-			'nascimento' => 'required',
-		];
+		return array_merge( $r, $this->rulesCommon );
 	}
 
 
