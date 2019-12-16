@@ -9,8 +9,11 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 
-class FuncionarioSaveValidation extends FormRequest
-{
+class FuncionarioSaveValidation extends FormRequest {
+
+
+
+
    /**
     * Determine if the user is authorized to make this request.
     * @return bool
@@ -63,7 +66,7 @@ class FuncionarioSaveValidation extends FormRequest
 		$r = [
 			'nome' => ['required','unique:funcionarios,nome','min:3','max:100'],
 		];
-		return array_merge( $rulesCreate, $this->rulesCommon );
+		return array_merge( $r, $this->rulesCommon );
 	}
 
 

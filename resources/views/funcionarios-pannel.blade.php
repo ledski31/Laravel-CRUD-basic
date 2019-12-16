@@ -73,7 +73,8 @@
 		
 		<br>
 		<label for='cCargo'>Cargo</label>
-		<input id='cCargo' type='number' value='{{ old('cargo') }}' name='cargo' />
+		<input id='cCargo' type='number' value='{{ old('cargo') }}' name='cargo' onchange='showCargoNome( this.value,"cCargoNome" ) '/>
+		<span id='cCargoNome'></span>
 		
 		<br>
 		<label for='cEndereco'>Endereço</label>
@@ -96,7 +97,7 @@
 </form>
 	
 
-	<br>
+<br>
 	
 
 <form action="funcionarios/update" method="post" name="formModificar">
@@ -105,8 +106,8 @@
 	<fieldset>
 		<legend>Modificar registro - POST /funcionarios/update</legend>
 		<label for='idModificar'>ID do registro</label>
-		<input id='idModificar' type='number' value='' name='idModificar' onchange="carregarRegistro(this.value)" />
-		<span>(O ID é inalterável)</span>
+		<input id='idModificar' type='number' value='' name='idModificar' onchange="carregarRegistro( this.value )" />
+		<span>ID não pode ser alterdo</span>
 		<!--
 		<button onclick="event.preventDefault(); carregarRegistro()">Carregar</button>
 		-->
@@ -117,7 +118,8 @@
 		
 		<br>
 		<label for='mCargo'>Cargo</label>
-		<input id='mCargo' type='number' value='{{ old('cargo') }}' name='cargo' />
+		<input id='mCargo' type='number' value='{{ old('cargo') }}' name='cargo' onchange='showCargoNome( this.value,"mCargoNome" )' />
+		<span id='mCargoNome'></span>
 		
 		<br>
 		<label for='mEndereco'>Endereço</label>
@@ -137,7 +139,7 @@
 </form>	
 
 
-	<br>
+<br>
 
 	
 <form action='funcionarios/destroy' method='post' name='formApagar'>
@@ -159,6 +161,9 @@
 
 
 
+
+
+
 <script>
 	function apagarRegistro() {
 		var id = formApagar.id.value
@@ -170,6 +175,12 @@
 		}
 	}
 
+
+
+
+	/**
+	*	Carrega o registro ao mudar o ID no fieldset de Update
+	*/
 	function carregarRegistro(id) {
 		if( id.length == 0 ) resetModificarCampos();
 		else {
@@ -185,10 +196,17 @@
 				formModificar.endereco.value = r.endereco
 				formModificar.telefone.value = r.telefone
 				formModificar.nascimento.value = r.nascimento
+				showCargoNome( r.cargo, "mCargoNome" )
 			} else resetModificarCampos();
 		}
 	}
 
+
+
+
+	/**
+	*	Limpa todos os campos do fieldset de Update
+	*/
 	function resetModificarCampos() {
 		formModificar.nome.value = ''
 		formModificar.cargo.value = ''
@@ -196,6 +214,51 @@
 		formModificar.telefone.value = ''
 		formModificar.nascimento.value = ''
 	}
+
+
+
+
+	/**
+	*	Exibe o nome do cargo ao lado do campo
+	*/
+	function showCargoNome( id, fieldId ) {
+		let nome = ''
+		for( let i = 0; i < window.cargos.length; i++ ) {
+			if( window.cargos[i].id == id ) {
+				nome = window.cargos[i].nome
+				break
+			}
+		}
+		document.getElementById( fieldId ).innerHTML = nome
+	}
+
+
+
+	
+	/**
+	*	Carrega a lista de Cargos na memoria ao carregar a página para que fique
+	*	fácil de pesquisar o nome do cargo ao alterar os campos de id de cargo.
+	*/
+	window.onload = function() {
+		window.cargos = syncGet( "cargos" )
+	}
+
+
+
+
+	/**
+	*	Faz uma requisição GET para um dos endpoints da API,
+	*	espeificado no parametro uri
+	*/
+	function syncGet( uri ) {
+		let xhttp = new XMLHttpRequest();
+		xhttp.open("GET", uri, false);
+		xhttp.send()
+		return JSON.parse( xhttp.responseText ).data
+	}
+
+
+
 
 	function requestCreate() {
 		preventDefault();

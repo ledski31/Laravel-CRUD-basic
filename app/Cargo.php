@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends Model {
 
-	public function funcionarios() {
+	public function getFuncionarios() {
 		return $this->hasMany( Funcionario::class, 'cargo' );
 	}
 }

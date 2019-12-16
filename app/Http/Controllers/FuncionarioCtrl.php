@@ -9,8 +9,14 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Funcionario;
 use App\Http\Requests\FuncionarioSaveValidation;
 
-class FuncionarioCtrl extends Controller
-{
+
+
+
+class FuncionarioCtrl extends Controller {
+
+
+
+
 	/**
 	 * Exibe a view da página de teste da API.
 	 * @return View
@@ -45,6 +51,9 @@ class FuncionarioCtrl extends Controller
 	public function show( $id = null ) {
 		// $f = Funcionario::where('id',$id)->get();
 		$f = $this->assertGetFuncionarioById( $id );
+		# adiciona as informações da entidade Cargo no objeto Funcionario, para
+		# retornar no JSON de response, para ser usado no javascript.
+		$f->getCargo;
 		return response()->json(
 			['error' => null, 'data' => $f,],
 			200
@@ -62,6 +71,9 @@ class FuncionarioCtrl extends Controller
 	 */
 	public function create( FuncionarioSaveValidation $req ) {
 		$f = Funcionario::create( $req->validated() );
+		# adiciona as informações da entidade Cargo no objeto Funcionario, para
+		# retornar no JSON de response, para ser usado no javascript.
+		$f->getCargo;
 		return response()->json(
 			['error' => null, 'data' => $f],
 			200
@@ -81,6 +93,9 @@ class FuncionarioCtrl extends Controller
 	public function update( FuncionarioSaveValidation $req ) {
 		$f = Funcionario::find( $req->idModificar );
 		$f->update( $req->validated() );
+		# adiciona as informações da entidade Cargo no objeto Funcionario, para
+		# retornar no JSON de response, para ser usado no javascript.
+		$f->getCargo;
 		return response()->json(
 			['error' => null, 'data' => $f],
 			200
